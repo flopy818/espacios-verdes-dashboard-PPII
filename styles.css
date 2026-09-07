@@ -193,6 +193,27 @@ code {
   color: #565F51;
 }
 
+/* ---------- Findings ---------- */
+
+.findings {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.findings li {
+  padding: 18px 22px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--moss);
+  font-size: 0.95rem;
+  color: #3A4436;
+  max-width: 74ch;
+}
+
 /* ---------- Next steps ---------- */
 
 .next-steps {
