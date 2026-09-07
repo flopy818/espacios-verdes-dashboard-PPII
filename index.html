@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espacios Verdes de Corrientes — Sprint 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="hero__eyebrow">Tecnicatura en Ciencias de Datos e IA · Práctica Profesionalizante II</div>
+    <h1 class="hero__title">Los espacios verdes<br>de Corrientes, un plano por plaza.</h1>
+    <p class="hero__lede">
+      293 espacios registrados en la fuente de datos abiertos de la ciudad — plazas, plazoletas,
+      paseos y polideportivos — relevados y depurados en el Sprint 1 de esta práctica.
+    </p>
+    <div class="hero__stats">
+      <div class="stat">
+        <div class="stat__value" id="statTotal">293</div>
+        <div class="stat__label">espacios verdes</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value" id="statBarrios">75</div>
+        <div class="stat__label">barrios con al menos uno</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value" id="statClasif">8</div>
+        <div class="stat__label">tipos de espacio distintos</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value" id="statOrdenanza">27%</div>
+        <div class="stat__label">sin ordenanza registrada</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="section" id="clasificacion">
+      <div class="section__head">
+        <span class="section__index">Sección 1</span>
+        <h2>Qué tipo de espacio predomina</h2>
+        <p>Más de un tercio de los registros son espacios verdes sin categoría específica; las plazas
+           tradicionales son el segundo grupo más numeroso.</p>
+      </div>
+      <div class="panel panel--chart">
+        <canvas id="chartClasificacion"></canvas>
+      </div>
+    </section>
+
+    <section class="section" id="barrios">
+      <div class="section__head">
+        <span class="section__index">Sección 2</span>
+        <h2>Dónde se concentran</h2>
+        <p>Un barrio por sí solo, Ciudad de Estepa, reúne más espacios verdes que los siguientes dos
+           barrios juntos.</p>
+      </div>
+      <div class="panel panel--chart panel--wide">
+        <canvas id="chartBarrios"></canvas>
+      </div>
+    </section>
+
+    <section class="section" id="calidad">
+      <div class="section__head">
+        <span class="section__index">Sección 3</span>
+        <h2>Qué tan completa está la fuente</h2>
+        <p>El diagnóstico de calidad que hicimos antes de analizar nada: dónde faltan datos y qué tan
+           grave es cada faltante.</p>
+      </div>
+      <div class="quality-grid">
+        <div class="quality-card quality-card--ok">
+          <span class="quality-card__tag">OK</span>
+          <h3>gid · the_geom · clasificacion</h3>
+          <p>Sin valores faltantes. Son los campos sobre los que se puede confiar sin revisión adicional.</p>
+        </div>
+        <div class="quality-card quality-card--warn">
+          <span class="quality-card__tag">Aceptable</span>
+          <h3>nombre_plaza · id_barrios · nombre_barrio · ubicacion</h3>
+          <p>Entre 0,3% y 5,5% de faltantes. Se completaron con valores estándar (S/N, SIN IDENTIFICAR)
+             durante la limpieza.</p>
+        </div>
+        <div class="quality-card quality-card--bad">
+          <span class="quality-card__tag">Revisar</span>
+          <h3>ordenanza</h3>
+          <p>27% de los registros no tiene número de ordenanza. Es el campo que más limita rastrear
+             el marco legal de cada espacio.</p>
+        </div>
+      </div>
+      <div class="panel panel--chart">
+        <canvas id="chartNulos"></canvas>
+      </div>
+    </section>
+
+    <section class="section" id="conclusiones">
+      <div class="section__head">
+        <span class="section__index">Sección 4</span>
+        <h2>Qué sigue</h2>
+      </div>
+      <ol class="next-steps">
+        <li>
+          <h3>Calcular superficie por espacio</h3>
+          <p>El polígono de <code>the_geom</code> permite estimar el área de cada espacio sin recurrir
+             a ninguna fuente externa.</p>
+        </li>
+        <li>
+          <h3>Inferir el barrio de los 2 registros sin identificar</h3>
+          <p>Comparando las calles de <code>ubicacion</code> contra las de espacios ya clasificados.</p>
+        </li>
+        <li>
+          <h3>Revisar la frontera entre PLAZA y PLAZOLETA</h3>
+          <p>Son las dos categorías más numerosas; conviene definir con el mentor si el criterio de
+             separación es consistente en toda la fuente.</p>
+        </li>
+        <li>
+          <h3>Buscar ordenanzas compartidas entre espacios</h3>
+          <p>Varias plazas podrían haberse creado bajo la misma norma — se puede explorar dentro del
+             propio dataset, sin fuentes adicionales.</p>
+        </li>
+      </ol>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Fuente: Portal de Datos Abiertos, vista <code>_vw_espacio_verde</code> — Sprint 1, Práctica Profesionalizante II.</p>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
