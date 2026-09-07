@@ -97,9 +97,31 @@
       </div>
     </section>
 
-    <section class="section" id="conclusiones">
+    <section class="section" id="hallazgos">
       <div class="section__head">
         <span class="section__index">Sección 4</span>
+        <h2>Hallazgos principales</h2>
+      </div>
+      <ul class="findings">
+        <li>El dataset contiene 293 espacios verdes registrados en 75 barrios de la ciudad.</li>
+        <li>La categoría más frecuente es "ESPACIO VERDE" (111 registros, 38%), seguida de "PLAZA"
+            (104, 35%) y "PLAZOLETA" (42, 14%). Categorías como "ROTONDA", "COSTANERA" y "PLAYA" son
+            minoritarias.</li>
+        <li>El barrio con más espacios verdes es "CIUDAD DE ESTEPA" (31), muy por encima del segundo
+            (CAMBA CUA, con 17).</li>
+        <li>El campo con más faltantes es "ordenanza": un 27% de los registros no tiene número de
+            ordenanza asignado, lo que dificulta rastrear el marco legal de cada espacio.</li>
+        <li>16 espacios no tienen nombre propio (se identifican como "S/N").</li>
+        <li>Se detectaron 2 registros sin barrio identificado, que deberían revisarse con el organismo
+            que provee la fuente.</li>
+        <li>No se encontraron duplicados en el identificador "gid" (cada fila es un espacio único),
+            aunque sí hay 4 nombres de plaza repetidos.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="conclusiones">
+      <div class="section__head">
+        <span class="section__index">Sección 5</span>
         <h2>Qué sigue</h2>
       </div>
       <ol class="next-steps">
@@ -113,14 +135,19 @@
           <p>Comparando las calles de <code>ubicacion</code> contra las de espacios ya clasificados.</p>
         </li>
         <li>
-          <h3>Revisar la frontera entre PLAZA y PLAZOLETA</h3>
-          <p>Son las dos categorías más numerosas; conviene definir con el mentor si el criterio de
-             separación es consistente en toda la fuente.</p>
-        </li>
-        <li>
           <h3>Buscar ordenanzas compartidas entre espacios</h3>
           <p>Varias plazas podrían haberse creado bajo la misma norma — se puede explorar dentro del
              propio dataset, sin fuentes adicionales.</p>
+        </li>
+        <li>
+          <h3>Explorar patrones en "ubicacion"</h3>
+          <p>Detectar zonas con mayor densidad de espacios verdes a partir de las calles mencionadas,
+             sin necesidad de coordenadas geográficas externas.</p>
+        </li>
+        <li>
+          <h3>Definir con el mentor si conviene sumar una fuente adicional</h3>
+          <p>Por ejemplo, población por barrio, para un análisis futuro de m² de espacio verde por
+             habitante — dejando en claro que este sprint se hizo únicamente con esta fuente.</p>
         </li>
       </ol>
     </section>
