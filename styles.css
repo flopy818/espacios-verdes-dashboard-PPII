@@ -30,6 +30,63 @@ body {
   padding: 0 32px;
 }
 
+/* ---------- Nav pegajosa ---------- */
+
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  background: rgba(238, 240, 231, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.topnav__brand {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--moss-deep);
+  white-space: nowrap;
+}
+
+.topnav__links {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.topnav__links a {
+  font-size: 0.8rem;
+  color: #5B6653;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 20px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.topnav__links a:hover {
+  background: rgba(51, 81, 62, 0.08);
+  color: var(--moss-deep);
+}
+
+.topnav__links a.is-active {
+  background: var(--moss);
+  color: #fff;
+}
+
+@media (max-width: 720px) {
+  .topnav { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .topnav__links { gap: 2px; }
+  .topnav__links a { font-size: 0.72rem; padding: 5px 8px; }
+}
+
 code {
   font-family: var(--font-mono);
   font-size: 0.85em;
@@ -147,7 +204,7 @@ code {
 }
 
 .panel--wide {
-  height: 480px;
+  height: 620px;
 }
 
 /* ---------- Quality cards ---------- */
@@ -192,6 +249,139 @@ code {
   font-size: 0.88rem;
   color: #565F51;
 }
+
+/* ---------- Controles interactivos ---------- */
+
+.toggle-group {
+  display: inline-flex;
+  gap: 2px;
+  background: var(--line);
+  padding: 3px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.toggle-btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: #4E594A;
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.toggle-btn:hover { color: var(--moss-deep); }
+
+.toggle-btn.is-active {
+  background: var(--paper-raised);
+  color: var(--moss-deep);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.search-box input {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper-raised);
+  color: var(--ink);
+  width: 100%;
+  max-width: 320px;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--moss);
+}
+
+.search-box__count {
+  font-size: 0.8rem;
+  color: #6B7563;
+  white-space: nowrap;
+}
+
+.check-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #3A4436;
+  cursor: pointer;
+  user-select: none;
+}
+
+.check-toggle input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--clay);
+  cursor: pointer;
+}
+
+/* ---------- Callout ---------- */
+
+.callout {
+  background: #F3EFDE;
+  border-left: 3px solid var(--clay);
+  padding: 18px 22px;
+  margin-bottom: 24px;
+  max-width: 74ch;
+}
+
+.callout__tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--clay);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.callout p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #3A4436;
+}
+
+/* ---------- Data table ---------- */
+
+.panel--table {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.data-table th {
+  text-align: left;
+  background: var(--moss);
+  color: #fff;
+  padding: 12px 16px;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.data-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:nth-child(even) { background: #EEEBE0; }
 
 /* ---------- Findings ---------- */
 
@@ -278,5 +468,6 @@ code {
   .section__head h2, .section__head p { grid-column: 1; }
   .quality-grid { grid-template-columns: 1fr; }
   .next-steps { grid-template-columns: 1fr; }
-  .panel--chart, .panel--wide { height: 300px; }
+  .panel--chart { height: 300px; }
+  .panel--wide { height: 480px; }
 }
