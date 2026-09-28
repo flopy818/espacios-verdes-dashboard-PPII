@@ -13,6 +13,19 @@
 
 <div class="page">
 
+  <nav class="topnav" id="topnav">
+    <span class="topnav__brand">Espacios Verdes</span>
+    <div class="topnav__links">
+      <a href="#clasificacion" data-nav="clasificacion">Clasificación</a>
+      <a href="#barrios" data-nav="barrios">Barrios</a>
+      <a href="#calidad" data-nav="calidad">Calidad</a>
+      <a href="#superficie" data-nav="superficie">Superficie</a>
+      <a href="#concentracion" data-nav="concentracion">Concentración</a>
+      <a href="#reciclaje" data-nav="reciclaje">Reciclaje</a>
+      <a href="#hallazgos" data-nav="hallazgos">Hallazgos</a>
+    </div>
+  </nav>
+
   <header class="hero">
     <div class="hero__eyebrow">Tecnicatura en Ciencias de Datos e IA · Práctica Profesionalizante II</div>
     <h1 class="hero__title">Los espacios verdes<br>de Corrientes, un plano por plaza.</h1>
@@ -46,8 +59,12 @@
       <div class="section__head">
         <span class="section__index">Sección 1</span>
         <h2>Qué tipo de espacio predomina</h2>
-        <p>Más de un tercio de los registros son espacios verdes sin categoría específica; las plazas
+        <p id="clasifTexto">Más de un tercio de los registros son espacios verdes sin categoría específica; las plazas
            tradicionales son el segundo grupo más numeroso.</p>
+      </div>
+      <div class="toggle-group" role="group" aria-label="Ver por cantidad o por superficie">
+        <button type="button" class="toggle-btn is-active" data-metric="cantidad">Por cantidad</button>
+        <button type="button" class="toggle-btn" data-metric="superficie">Por superficie (m²)</button>
       </div>
       <div class="panel panel--chart">
         <canvas id="chartClasificacion"></canvas>
@@ -58,8 +75,12 @@
       <div class="section__head">
         <span class="section__index">Sección 2</span>
         <h2>Dónde se concentran</h2>
-        <p>Un barrio por sí solo, Ciudad de Estepa, reúne más espacios verdes que los siguientes dos
-           barrios juntos.</p>
+        <p>Ciudad de Estepa concentra 31 espacios verdes, muy por encima del segundo barrio,
+           Camba Cuá, con 17.</p>
+      </div>
+      <div class="search-box">
+        <input type="text" id="filtroBarrios" placeholder="Filtrar por nombre de barrio…" autocomplete="off">
+        <span class="search-box__count" id="filtroBarriosCount"></span>
       </div>
       <div class="panel panel--chart panel--wide">
         <canvas id="chartBarrios"></canvas>
@@ -97,9 +118,79 @@
       </div>
     </section>
 
-    <section class="section" id="hallazgos">
+    <section class="section" id="superficie">
       <div class="section__head">
         <span class="section__index">Sección 4</span>
+        <h2>El ranking se da vuelta con superficie</h2>
+        <p>Por cantidad de registros gana "ESPACIO VERDE". Pero contando metros cuadrados reales —y
+           dejando aparte la Reserva Natural Santa Catalina, que por su tamaño se analiza por separado—
+           la categoría más grande es "PLAZA".</p>
+      </div>
+      <div class="callout">
+        <span class="callout__tag">Caso aparte</span>
+        <p>La <strong>Reserva Natural Municipal Santa Catalina</strong> mide 277 hectáreas — más que
+           todo el resto de los espacios verdes de la ciudad juntos. Los gráficos de esta sección la
+           excluyen para no distorsionar la distribución; se la analiza aparte en la sección siguiente.</p>
+      </div>
+      <div class="panel panel--chart">
+        <canvas id="chartSuperficieClasif"></canvas>
+      </div>
+      <div class="panel panel--chart" style="margin-top:24px;">
+        <canvas id="chartBoxplot"></canvas>
+      </div>
+    </section>
+
+    <section class="section" id="concentracion">
+      <div class="section__head">
+        <span class="section__index">Sección 5</span>
+        <h2>Dónde está concentrada la superficie</h2>
+        <p>Corregimos un dato antes de medir esto: la Reserva Santa Catalina figuraba sin barrio
+           asignado en la fuente original. El cruce con el dataset de puntos de reciclaje confirma que
+           pertenece al barrio Santa Catalina — la reasignamos para este análisis.</p>
+      </div>
+      <label class="check-toggle">
+        <input type="checkbox" id="checkReserva">
+        <span>Incluir la Reserva Natural Santa Catalina en el cálculo</span>
+      </label>
+      <div class="hero__stats" style="margin: 20px 0 28px;">
+        <div class="stat">
+          <div class="stat__value" id="statConcentracion">—</div>
+          <div class="stat__label" id="statConcentracionLabel">de la superficie está en los 5 barrios top</div>
+        </div>
+      </div>
+      <div class="panel panel--chart panel--wide">
+        <canvas id="chartBarriosSuperficie"></canvas>
+      </div>
+    </section>
+
+    <section class="section" id="reciclaje">
+      <div class="section__head">
+        <span class="section__index">Sección 6</span>
+        <h2>Cruce con la red de reciclaje</h2>
+        <p>El dataset "Reciclando Juntos" registra 213 filas de recolección entre 2019 y 2020, en solo
+           4 puntos fijos más una categoría "Evento". Los 4 puntos fijos coinciden con espacios verdes
+           de este dataset.</p>
+      </div>
+      <div class="callout">
+        <span class="callout__tag">Hallazgo</span>
+        <p id="pesoEventosTexto">Cargando…</p>
+      </div>
+      <div class="panel panel--table">
+        <table class="data-table" id="tablaCruce">
+          <thead>
+            <tr><th>Punto verde</th><th>Barrio</th><th>Superficie</th><th>kg reciclados</th><th>kg / m²</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="panel panel--chart panel--wide" style="margin-top:24px;">
+        <canvas id="chartSerieMensual"></canvas>
+      </div>
+    </section>
+
+    <section class="section" id="hallazgos">
+      <div class="section__head">
+        <span class="section__index">Sección 7</span>
         <h2>Hallazgos principales</h2>
       </div>
       <ul class="findings">
@@ -115,13 +206,13 @@
         <li>Se detectaron 2 registros sin barrio identificado, que deberían revisarse con el organismo
             que provee la fuente.</li>
         <li>No se encontraron duplicados en el identificador "gid" (cada fila es un espacio único),
-            aunque sí hay 4 nombres de plaza repetidos.</li>
+            aunque sí hay 4 nombres de plaza que se repiten, en un total de 8 filas (2 apariciones cada uno).</li>
       </ul>
     </section>
 
     <section class="section" id="conclusiones">
       <div class="section__head">
-        <span class="section__index">Sección 5</span>
+        <span class="section__index">Sección 8</span>
         <h2>Qué sigue</h2>
       </div>
       <ol class="next-steps">
@@ -161,7 +252,9 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@4/build/index.umd.min.js"></script>
 <script src="data.js"></script>
+<script src="data2.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
